@@ -41,11 +41,7 @@ dependencies:
   get_storage:
   awesome_dialog: ^3.0.2
   intl: ^0.18.0
-  record:
-  audioplayers: ^0.20.1
-  path_provider:
-  permission_handler:
-  uuid:
+
 
 
 dev_dependencies:

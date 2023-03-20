@@ -20,7 +20,7 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
-      surfaceTintColor: Colors.green.withOpacity(0.1),
+      surfaceTintColor: Colors.white,
       title: Text('What is in your mind?', style: primaryFontStyle(fontSize: 16.0, fontWeight: FontWeight.w600),),
       content: SingleChildScrollView(
         child: Column(

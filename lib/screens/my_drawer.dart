@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../constant/constant.dart';
-import '../recode.dart';
 import 'todo-app/todo_main_screen.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -40,14 +38,6 @@ class MyDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 Get.to(() => const TodoMainScreen());
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.note_add),
-              title: const Text('Record App'),
-              onTap: () {
-                Navigator.pop(context);
-                Get.to(() => const Recode());
               },
             ),
           ],
