@@ -1,12 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:post_project/screens/profile/profile.dart';
+import 'package:post_project/testing_page.dart';
 import '../constant/constant.dart';
+import '../controller/theme_controller.dart';
 import 'todo-app/todo_main_screen.dart';
 
 class MyDrawer extends StatelessWidget {
-  const MyDrawer({Key? key}) : super(key: key);
-
+  MyDrawer({Key? key}) : super(key: key);
+  final themeController = Get.find<ThemeController>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -21,10 +23,20 @@ class MyDrawer extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 50.0, horizontal: 60.0),
-                child: Text('Jamshaid Malik', style: whiteFontStyle(fontWeight: FontWeight.bold, fontSize: 16.0).copyWith(color: Colors.white),),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 50.0, horizontal: 60.0),
+                child: Text(
+                  'Jamshaid Malik',
+                  style: whiteFontStyle(
+                          fontWeight: FontWeight.bold, fontSize: 16.0)
+                      .copyWith(color: Colors.white),
+                ),
               ),
             ),
+            Obx(() => Switch(
+                  value: themeController.isDark,
+                  onChanged: (value) => themeController.toggleTheme(),
+                )),
             ListTile(
               leading: const Icon(Icons.home),
               title: const Text('Home'),
@@ -38,6 +50,24 @@ class MyDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 Get.to(() => const TodoMainScreen());
+              },
+            ),
+            ListTile(
+              tileColor: Colors.grey[200],
+              leading: const Icon(Icons.person),
+              title: const Text('Profile'),
+              onTap: () {
+                Navigator.pop(context);
+                Get.to(() => const MyProfile());
+              },
+            ),
+            ListTile(
+              tileColor: Colors.grey[200],
+              leading: const Icon(Icons.person),
+              title: const Text('Testing'),
+              onTap: () {
+                Navigator.pop(context);
+                Get.to(() => const TestingPage());
               },
             ),
           ],

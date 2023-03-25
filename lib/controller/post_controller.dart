@@ -1,26 +1,68 @@
 import 'dart:convert';
-
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import '../model/post_model.dart';
-class PostController {
-  String postUrl = 'https://jsonplaceholder.typicode.com/posts';
-  List<PostClass> postList = [];
+import 'package:get/get.dart';
+
+class PostController extends GetxController {
   PostClass post = PostClass();
+  List<PostClass> postList = [];
   bool isLoading = false;
-  Future getPost()async{
+  bool hasMore = true;
+  int page = 1;
+  int limit = 13;
+
+  final ScrollController scrollController = ScrollController();
+
+  @override
+  void onInit() {
+    super.onInit();
+    scrollController.addListener(_scrollListener);
+    fetchPost();
+  }
+  Future fetchPost() async {
     isLoading = true;
-    var response = await http.get(Uri.parse(postUrl));
-    if(response.statusCode == 200){
-      post = PostClass.fromJson(jsonDecode(response.body));
-      postList.add(post);
+    var response = await http.get(Uri.parse(
+        'https://jsonplaceholder.typicode.com/posts?_limit=$limit&_page=$page'));
+    if (response.statusCode == 200) {
+      final newList = jsonDecode(response.body);
+
+      page++;
+      if (newList.length < limit) {
+        hasMore = false;
+      }
+      newList.forEach((element) {
+        post = PostClass.fromJson(element);
+        postList.add(post);
+      });
+      update();
       isLoading = false;
-      print('reponse= ${response.body}');
-    }else{
+    } else {
       isLoading = false;
-      print('error from server');
     }
-    return response;
+  }
+
+  _scrollListener() {
+    if (scrollController.position.maxScrollExtent ==
+        scrollController.offset) {
+      fetchPost();
+      update();
+    }
+  }
+
+ onRefereshPost()async{
+  await Future.delayed(const Duration(seconds: 2));
+  postList.clear();
+  page = 1;
+  hasMore = true;
+  fetchPost();
+  update();
+}
+
+@override
+  void onClose() {
+    super.onClose();
+    scrollController.dispose();
   }
 
 }

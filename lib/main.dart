@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:post_project/screens/post_page.dart';
-import 'package:post_project/screens/todo-app/todo_main_screen.dart';
-import 'package:post_project/splashscreen.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:post_project/testing_page.dart';
-
+import 'controller/post_controller.dart';
 import 'controller/theme_controller.dart';
 import 'controller/todo_controller.dart';
 
@@ -16,12 +13,11 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-
   @override
   Widget build(BuildContext context) {
     final themeController = Get.put(ThemeController());
-    Get.put(TodoController());
+    Get.put(PostController());
+    Get.put(TodoController()); 
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter',

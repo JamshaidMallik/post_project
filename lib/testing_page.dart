@@ -3,20 +3,21 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:post_project/controller/theme_controller.dart';
 
-class MyDropdownMenu extends StatefulWidget {
-  const MyDropdownMenu({super.key});
+class TestingPage extends StatefulWidget {
+  const TestingPage({super.key});
   @override
   // ignore: library_private_types_in_public_api
-  _MyDropdownMenuState createState() => _MyDropdownMenuState();
+  _TestingPageState createState() => _TestingPageState();
 }
 
-class _MyDropdownMenuState extends State<MyDropdownMenu> {
+class _TestingPageState extends State<TestingPage> {
   bool isSwitched = false;
   bool _isChecked = false;
   bool isLoading = false;
   String? selectedOption; // To keep track of selected option
   final box = GetStorage();
   final themeController = Get.find<ThemeController>();
+  
   @override
   void initState() {
     super.initState();
@@ -56,18 +57,12 @@ class _MyDropdownMenuState extends State<MyDropdownMenu> {
 
   fetchOfflineData() {
     bool myBool = box.read('key_bool') ?? false;
-    print('myBool: $myBool');
     int myInt = box.read('key_int') ?? 0;
-    print('myInt $myInt');
     double myDouble = box.read('key_double') ?? 0.0;
-    print('myDouble $myDouble');
     String myString = box.read('key_string');
-    print('myString $myString');
     List<int> myList = box.read('key_list')?.cast<int>() ?? [];
-    print('myList $myList');
     Map<String, dynamic> myMap = box.read('key_map')?.cast<String, dynamic>() ?? {};
     dynamic nameFetch = myMap['name'];
-    print('myMap $nameFetch');
   }
 
 
