@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:post_project/model/post_model.dart';
 import 'package:post_project/screens/profile/profile.dart';
 import 'package:post_project/testing_page.dart';
 import '../constant/constant.dart';
 import '../controller/theme_controller.dart';
+import 'post_page.dart';
 import 'todo-app/todo_main_screen.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -48,10 +50,10 @@ class MyDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.note_add),
-              title: const Text('Todo App'),
+              title: const Text('All Post'),
               onTap: () {
                 Navigator.pop(context);
-                Get.to(() => const TodoMainScreen());
+                Get.to(() => const PostPage());
               },
             ),
             ListTile(

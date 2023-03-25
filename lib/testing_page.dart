@@ -30,7 +30,6 @@ class _TestingPageState extends State<TestingPage> {
   setSelectedOption(String option) {
     setState(() {
       selectedOption = option;
-      print(selectedOption);
       box.write('radio_value', selectedOption);
     });
   }

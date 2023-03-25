@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:post_project/screens/post_page.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:post_project/screens/todo-app/todo_main_screen.dart';
+import 'constant/constant.dart';
 import 'controller/post_controller.dart';
 import 'controller/theme_controller.dart';
 import 'controller/todo_controller.dart';
@@ -16,15 +18,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeController = Get.put(ThemeController());
-    Get.put(PostController());
-    Get.put(TodoController()); 
+    Get.put(TodoController());
     return GetMaterialApp(
+      defaultTransition: Transition.leftToRight,
+      transitionDuration: const Duration(milliseconds: 500),
       debugShowCheckedModeBanner: false,
-      title: 'Flutter',
-      theme: ThemeData.light(useMaterial3: true),
-      darkTheme: ThemeData.dark(useMaterial3: true),
+      title: 'Flutter Testing',
+      theme: MyThemes.lightTheme,
+      darkTheme: MyThemes.darkTheme,
       themeMode: themeController.isDark ? ThemeMode.dark : ThemeMode.light,
-      home: const HomePage(),
+      home: const TodoMainScreen(),
     );
   }
+
+  // custom theme class for different colors and fonts
 }

@@ -18,7 +18,7 @@ class _ClipPathScreenState extends State<ClipPathScreen> {
           child: Container(
             height: 200,
             width: 200,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage('https://img.freepik.com/free-photo/wide-angle-shot-single-tree-growing-clouded-sky-during-sunset-surrounded-by-grass_181624-22807.jpg'),
                 fit: BoxFit.cover,
