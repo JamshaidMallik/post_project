@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:post_project/model/post_model.dart';
 import 'package:post_project/screens/profile/profile.dart';
 import 'package:post_project/testing_page.dart';
 import '../constant/constant.dart';
 import '../controller/theme_controller.dart';
 import 'post_page.dart';
-import 'todo-app/todo_main_screen.dart';
 
 class MyDrawer extends StatelessWidget {
   MyDrawer({Key? key}) : super(key: key);

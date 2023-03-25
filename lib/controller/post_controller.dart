@@ -7,26 +7,35 @@ import 'package:get/get.dart';
 class PostController extends GetxController {
   PostClass post = PostClass();
   List<PostClass> postList = [];
+  List visibleList = [].obs;
   bool isLoading = false;
   bool hasMore = true;
   int page = 1;
-  int limit = 13;
-
+  int limit = 50;
   final ScrollController scrollController = ScrollController();
-
   @override
   void onInit() {
     super.onInit();
     scrollController.addListener(_scrollListener);
     fetchPost();
   }
+
+  void searchPost(String value) {
+    visibleList = postList
+        .where((element) => element.title
+            .toString()
+            .toLowerCase()
+            .contains(value.toLowerCase()))
+        .toList();
+    update();
+  }
+
   Future fetchPost() async {
     isLoading = true;
     var response = await http.get(Uri.parse(
         'https://jsonplaceholder.typicode.com/posts?_limit=$limit&_page=$page'));
     if (response.statusCode == 200) {
       final newList = jsonDecode(response.body);
-
       page++;
       if (newList.length < limit) {
         hasMore = false;
@@ -34,6 +43,7 @@ class PostController extends GetxController {
       newList.forEach((element) {
         post = PostClass.fromJson(element);
         postList.add(post);
+        visibleList = postList;
       });
       update();
       isLoading = false;
@@ -43,26 +53,24 @@ class PostController extends GetxController {
   }
 
   _scrollListener() {
-    if (scrollController.position.maxScrollExtent ==
-        scrollController.offset) {
+    if (scrollController.position.maxScrollExtent == scrollController.offset) {
       fetchPost();
       update();
     }
   }
 
- onRefereshPost()async{
-  await Future.delayed(const Duration(seconds: 2));
-  postList.clear();
-  page = 1;
-  hasMore = true;
-  fetchPost();
-  update();
-}
+  onRefereshPost() async {
+    await Future.delayed(const Duration(seconds: 2));
+    postList.clear();
+    page = 1;
+    hasMore = true;
+    fetchPost();
+    update();
+  }
 
-@override
+  @override
   void onClose() {
     super.onClose();
     scrollController.dispose();
   }
-
 }
