@@ -33,7 +33,9 @@ class MyDrawer extends StatelessWidget {
                 ),
               ),
             ),
-            Obx(() => Switch(
+            Obx(() => SwitchListTile(
+                  title: Text(
+                      '${themeController.isDark ? 'Dark Theme' : 'Light Theme'} '),
                   value: themeController.isDark,
                   onChanged: (value) => themeController.toggleTheme(),
                 )),
@@ -53,7 +55,6 @@ class MyDrawer extends StatelessWidget {
               },
             ),
             ListTile(
-              tileColor: Colors.grey[200],
               leading: const Icon(Icons.person),
               title: const Text('Profile'),
               onTap: () {
@@ -62,7 +63,6 @@ class MyDrawer extends StatelessWidget {
               },
             ),
             ListTile(
-              tileColor: Colors.grey[200],
               leading: const Icon(Icons.person),
               title: const Text('Testing'),
               onTap: () {
