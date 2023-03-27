@@ -30,6 +30,4 @@ class MyApp extends StatelessWidget {
       home: const TodoMainScreen(),
     );
   }
-
-  // custom theme class for different colors and fonts
 }
