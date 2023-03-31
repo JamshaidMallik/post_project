@@ -6,6 +6,7 @@ import '../constant/constant.dart';
 import '../controller/post_controller.dart';
 import '../controller/theme_controller.dart';
 import '../widgets/post_card_widget.dart';
+import 'show_selectd_post_screen.dart';
 
 class PostPage extends GetView<PostController> {
   const PostPage({Key? key}) : super(key: key);
@@ -24,9 +25,22 @@ class PostPage extends GetView<PostController> {
                 style: bigFontStyle(),
               ),
               actions: [
-                InkWell(
-                    onTap: () => Get.to(SelectedPostsScreen()),
-                    child: Text('Select Items  ${controller.selectedPostList.length}')),
+                controller.selectedPostList.isNotEmpty?  InkWell(
+                    onTap: () => Get.to(const SelectedPostsScreen()),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CircleAvatar(
+                        backgroundColor: randomColor[Random().nextInt(randomColor.length)],
+                        child: Text(
+                          controller.selectedPostList.length.toString(),
+                          style: TextStyle(
+                              color: whiteColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0),
+                        ),
+                      ),
+                    )
+                ):Container(),
               ],
             ),
             body: RefreshIndicator(

@@ -32,7 +32,6 @@ class PostController extends GetxController {
     update();
   }
 
-
   void searchPost(String value) {
     visibleList = postList
         .where((element) => element.title
