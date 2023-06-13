@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:post_project/screens/post_page.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:post_project/screens/todo-app/todo_main_screen.dart';
 import 'constant/constant.dart';
-import 'controller/post_controller.dart';
 import 'controller/theme_controller.dart';
 import 'controller/todo_controller.dart';
+import 'google_map/google_map.dart';
 
 void main() async {
   await GetStorage.init();
@@ -27,7 +26,8 @@ class MyApp extends StatelessWidget {
       theme: MyThemes.lightTheme,
       darkTheme: MyThemes.darkTheme,
       themeMode: themeController.isDark ? ThemeMode.dark : ThemeMode.light,
-      home: const TodoMainScreen(),
+      // home: const TodoMainScreen(),
+      home: const GoogleMapScreen(),
     );
   }
 }
