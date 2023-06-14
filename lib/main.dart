@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
       theme: MyThemes.lightTheme,
       darkTheme: MyThemes.darkTheme,
       themeMode: themeController.isDark ? ThemeMode.dark : ThemeMode.light,
-      // home: const TodoMainScreen(),
-      home: const GoogleMapScreen(),
+      home: const TodoMainScreen(),
+      // home: const GoogleMapScreen(),
     );
   }
 }
