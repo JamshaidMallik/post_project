@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeController = Get.put(ThemeController());
+
     Get.put(TodoController());
     return GetMaterialApp(
       defaultTransition: Transition.leftToRight,
