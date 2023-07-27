@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../constant/constant.dart';
-import '../screens/post_detail.dart';
+import '../screens/post_app/post_detail.dart';
 
 Card postCardWidget(BuildContext context, item) {
   return Card(

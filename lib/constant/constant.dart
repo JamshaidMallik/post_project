@@ -5,6 +5,18 @@ import 'package:google_fonts/google_fonts.dart';
 class MyThemes {
   static final lightTheme = ThemeData(
     useMaterial3: true,
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.red,
+      foregroundColor: Colors.white,
+      iconTheme: const IconThemeData(color: Colors.white),
+      titleTextStyle: GoogleFonts.poppins(
+        textStyle: const TextStyle(
+          fontSize: 16.0,
+          fontFamily: 'Roboto',
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
     fontFamily: GoogleFonts.poppins().fontFamily,
     brightness: Brightness.light,
     scaffoldBackgroundColor: const Color(0xfff5f5f5),

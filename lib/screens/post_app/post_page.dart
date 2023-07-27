@@ -2,10 +2,10 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../constant/constant.dart';
-import '../controller/post_controller.dart';
-import '../controller/theme_controller.dart';
-import '../widgets/post_card_widget.dart';
+import '../../constant/constant.dart';
+import '../../controller/post_controller.dart';
+import '../../controller/theme_controller.dart';
+import '../../widgets/post_card_widget.dart';
 
 class PostPage extends StatefulWidget {
   const PostPage({Key? key}) : super(key: key);
@@ -51,7 +51,7 @@ class _PostPageState extends State<PostPage> {
                     padding: const EdgeInsets.all(10),
                   ),
                   Expanded(
-                    child: postController.visibleList.isNotEmpty
+                    child: (postController.visibleList.isNotEmpty)
                         ? ListView.builder(
                             controller: postController.scrollController,
                             itemCount: postController.visibleList.length + 1,
@@ -61,16 +61,7 @@ class _PostPageState extends State<PostPage> {
                                 var item = postController.visibleList[index];
                                 return postCardWidget(context, item);
                               } else {
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 50.0),
-                                  child: Center(
-                                      child: postController.hasMore
-                                          ? CircularProgressIndicator(
-                                              color: randomColor[Random()
-                                                  .nextInt(randomColor.length)])
-                                          : const Text('has no more data')),
-                                );
+                                return loadingWidget(postController);
                               }
                             })
                         : const Center(child: Text('No Match Found')),
@@ -80,5 +71,26 @@ class _PostPageState extends State<PostPage> {
             ),
           );
         });
+  }
+}
+
+// ignore: camel_case_types
+class loadingWidget extends StatelessWidget {
+  final PostController Controller;
+  const loadingWidget(
+    this.Controller, {
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 50.0),
+      child: Center(
+          child: Controller.hasMore
+              ? CircularProgressIndicator(
+                  color: randomColor[Random().nextInt(randomColor.length)])
+              : const Text('has no more data')),
+    );
   }
 }

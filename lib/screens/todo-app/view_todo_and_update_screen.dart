@@ -28,6 +28,25 @@ class _ViewAndUpdateTodoState extends State<ViewAndUpdateTodo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Update Note', style: primaryFontStyle()),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () => Get.back(),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              controller.deleteTodo(
+                widget.index,
+              );
+              Get.back();
+            },
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -85,7 +104,7 @@ class _ViewAndUpdateTodoState extends State<ViewAndUpdateTodo> {
                 Get.back();
               }
             },
-            child: const Icon(Icons.update, color: Colors.white),
+            child: Center(child: Text('Update', style: primaryFontStyle(fontSize: 10.0))),
           );
         }
       ),

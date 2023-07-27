@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:post_project/model/post_model.dart';
 
-import '../constant/constant.dart';
+import '../../constant/constant.dart';
 
 class PostDetail extends StatelessWidget {
    PostClass item;

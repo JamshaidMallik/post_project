@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:post_project/screens/post_page.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:post_project/screens/todo-app/todo_main_screen.dart';
@@ -19,6 +18,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeController = Get.put(ThemeController());
     Get.put(TodoController());
+    Get.put(PostController());
+
     return GetMaterialApp(
       defaultTransition: Transition.leftToRight,
       transitionDuration: const Duration(milliseconds: 500),

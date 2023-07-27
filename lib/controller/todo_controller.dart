@@ -8,6 +8,7 @@ class TodoController extends GetxController {
   List get todoList => _todoList;
   RxBool isGrid = false.obs;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  TextEditingController searchController = TextEditingController();
   
   @override
   void onInit() {
@@ -51,4 +52,31 @@ class TodoController extends GetxController {
     box.write('todoList', _todoList);
     update();
   }
+
+  void searchTodo() async {
+    List tempList = [];
+    var fullList = await box.read('todoList');
+    tempList = fullList;
+    // Handle the case when either searchController or fullList is null
+    if (searchController == null || fullList == null) {
+      return;
+    }
+
+    if (searchController.text.isNotEmpty) {
+      for (var element in _todoList) {
+        if (element['title'].toString().toLowerCase().contains(searchController.text.toLowerCase()) ||
+            element['description'].toString().toLowerCase().contains(searchController.text.toLowerCase())) {
+          tempList.add(element);
+        }
+      }
+      _todoList.assignAll(tempList);
+    }
+    else if (searchController.text.isEmpty || tempList.isEmpty) {
+      _todoList.assignAll(fullList);
+      update();
+    }
+    update();
+  }
+
+
 }

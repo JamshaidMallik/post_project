@@ -4,7 +4,7 @@ import 'package:post_project/screens/profile/profile.dart';
 import 'package:post_project/testing_page.dart';
 import '../constant/constant.dart';
 import '../controller/theme_controller.dart';
-import 'post_page.dart';
+import '../screens/post_app/post_page.dart';
 
 class MyDrawer extends StatelessWidget {
   MyDrawer({Key? key}) : super(key: key);
@@ -26,7 +26,7 @@ class MyDrawer extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(
                     vertical: 50.0, horizontal: 60.0),
                 child: Text(
-                  'Jamshaid Malik',
+                  'My To Do App',
                   style: whiteFontStyle(
                           fontWeight: FontWeight.bold, fontSize: 16.0)
                       .copyWith(color: Colors.white),
@@ -51,23 +51,7 @@ class MyDrawer extends StatelessWidget {
               title: const Text('All Post'),
               onTap: () {
                 Navigator.pop(context);
-                Get.to(() => const PostPage());
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Profile'),
-              onTap: () {
-                Navigator.pop(context);
-                Get.to(() => const MyProfile());
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Testing'),
-              onTap: () {
-                Navigator.pop(context);
-                Get.to(() => const TestingPage());
+                Get.to(() =>  PostPage());
               },
             ),
           ],

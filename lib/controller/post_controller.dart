@@ -72,5 +72,6 @@ class PostController extends GetxController {
   void onClose() {
     super.onClose();
     scrollController.dispose();
+    visibleList.clear();
   }
 }

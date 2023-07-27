@@ -1,10 +1,13 @@
+import 'dart:math';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:post_project/controller/todo_controller.dart';
 import 'package:post_project/screens/todo-app/view_todo_and_update_screen.dart';
 import '../../constant/constant.dart';
 import 'package:get/get.dart';
-import '../my_drawer.dart';
+import '../../widgets/my_drawer.dart';
 import 'add_todo.dart';
 import 'package:intl/intl.dart';
 
@@ -52,62 +55,67 @@ class _TodoMainScreenState extends State<TodoMainScreen> {
                       : Container(),
                 ],
               ),
-              body: (controller.todoList.isNotEmpty)
-                  ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: controller.isGrid.value
-                          ? ListView.builder(
-                              physics: const BouncingScrollPhysics(),
-                              itemCount: controller.todoList.length,
-                              itemBuilder: (context, index) {
-                                var todo = controller.todoList[index];
-                                String title = todo['title'];
-                                String description = todo['description'];
-                                final formattedDate = DateTime.parse(
-                                    todo['created_at'].toString());
-                                final date = DateFormat('dd-MM-yyyy')
-                                    .format(formattedDate);
-                                return TodoListCard(
-                                    title: title,
-                                    description: description,
-                                    date: date,
-                                    controller: controller,
-                                    index: index);
-                              },
-                            )
-                          : GridView.builder(
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10,
-                              ),
-                              physics: const BouncingScrollPhysics(),
-                              itemCount: controller.todoList.length,
-                              itemBuilder: (context, index) {
-                                var todo = controller.todoList[index];
-                                String title = todo['title'];
-                                String description = todo['description'];
-                                final formattedDate = DateTime.parse(
-                                    todo['created_at'].toString());
-                                final date = DateFormat('dd-MM-yyyy')
-                                    .format(formattedDate);
-                                return TodoListCard(
-                                    title: title,
-                                    description: description,
-                                    date: date,
-                                    controller: controller,
-                                    index: index);
-                              },
-                            ),
-                    )
-                  : Center(
-                      child: Text(
-                        'Add Your Task according to your need',
-                        style: primaryFontStyle(
-                            fontWeight: FontWeight.w400, fontSize: 12.0),
-                      ),
+              body: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    CupertinoSearchTextField(
+                      controller: controller.searchController,
+                      onChanged: (value) {
+                        controller.searchTodo();
+                      },
                     ),
+                    const SizedBox(height: 10,),
+                    controller.isGrid.value
+                        ? ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: controller.todoList.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        var todo = controller.todoList[index];
+                        String title = todo['title'];
+                        String description = todo['description'];
+                        final formattedDate = DateTime.parse(
+                            todo['created_at'].toString());
+                        final date = DateFormat('dd-MM-yyyy')
+                            .format(formattedDate);
+                        return TodoListCard(
+                            title: title,
+                            description: description,
+                            date: date,
+                            controller: controller,
+                            index: index);
+                      },
+                    )
+                        : GridView.builder(
+                      gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                      ),
+                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: controller.todoList.length,
+                      itemBuilder: (context, index) {
+                        var todo = controller.todoList[index];
+                        String title = todo['title'];
+                        String description = todo['description'];
+                        final formattedDate = DateTime.parse(
+                            todo['created_at'].toString());
+                        final date = DateFormat('dd-MM-yyyy')
+                            .format(formattedDate);
+                        return TodoListCard(
+                            title: title,
+                            description: description,
+                            date: date,
+                            controller: controller,
+                            index: index);
+                      },
+                    ),
+                  ],
+                )
+              ),
               floatingActionButton:
                   FloatingActionButtons(controller: controller),
             ),
@@ -261,61 +269,141 @@ class TodoListCard extends StatelessWidget {
                 title: title, description: description, index: index),
           );
         },
-        child: Container(
-          margin: EdgeInsets.only(bottom: controller.isGrid.value ? 10.0 : 0.0),
-          width: double.infinity,
-          height:
-              controller.isGrid.value ? size.height * 0.2 : size.height * 0.4,
-          decoration: BoxDecoration(
-            color: Colors.grey.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        onLongPress: (){
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Delete'),
+                content: const Text('Are you sure you want to delete this note?'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      controller.deleteTodo(
+                        index,
+                      );
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          duration: Duration(milliseconds: 500),
+                          backgroundColor: Colors.red,
+                          content: Text('Todo Deleted Permanently'),
+                        ),
+                      );
+                    },
+                    child: const Text('Delete'),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        child: Stack(
+          children: [
+            Container(
+              margin: EdgeInsets.only(bottom: controller.isGrid.value ? 10.0 : 0.0),
+              width: double.infinity,
+              height:
+                  controller.isGrid.value ? size.height * 0.2 : size.height * 0.4,
+              decoration: BoxDecoration(
+                // put random colors
+                color: Colors.primaries[Random().nextInt(Colors.primaries.length)].withOpacity(0.2),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        date,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                        style: greyFontStyle(
-                            fontSize: 12.0, fontWeight: FontWeight.w400),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            date,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: greyFontStyle(
+                                fontSize: 12.0, fontWeight: FontWeight.w400),
+                          ),
+                          Text(
+                            '${index + 1} / ${controller.todoList.length}',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: greyFontStyle(
+                                fontSize: 12.0, fontWeight: FontWeight.w400),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10.0,
                       ),
                       Text(
-                        '${index + 1} / ${controller.todoList.length}',
+                        title,
                         overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                        style: greyFontStyle(
-                            fontSize: 12.0, fontWeight: FontWeight.w400),
+                        maxLines: 1,
+                        style: primaryFontStyle(
+                            fontSize: 14.0, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        description,
+                        style: secondaryFontStyle(
+                            fontSize: 12.0, fontWeight: FontWeight.w500),
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  Text(
-                    title,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: primaryFontStyle(
-                        fontSize: 14.0, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    description,
-                    style: secondaryFontStyle(
-                        fontSize: 12.0, fontWeight: FontWeight.w500),
-                  ),
-                ],
+                ),
               ),
             ),
-          ),
+            Positioned(
+              bottom: 10,
+                right: 5,
+              child: Icon(Icons.share,
+            color: Colors.primaries[Random().nextInt(Colors.primaries.length)].withOpacity(0.7),
+            ),),
+          ],
         ),
       ),
     );
   }
 }
+// random colors for todo list
+List colors = [
+  Colors.red,
+  Colors.green,
+  Colors.blue,
+  Colors.yellow,
+  Colors.orange,
+  Colors.pink,
+  Colors.purple,
+  Colors.teal,
+  Colors.brown,
+  Colors.indigo,
+  Colors.lime,
+  Colors.cyan,
+  Colors.amber,
+  Colors.deepOrange,
+  Colors.deepPurple,
+  Colors.lightBlue,
+  Colors.lightGreen,
+  Colors.limeAccent,
+  Colors.pinkAccent,
+  Colors.purpleAccent,
+  Colors.tealAccent,
+  Colors.yellowAccent,
+  Colors.amberAccent,
+  Colors.cyanAccent,
+  Colors.deepOrangeAccent,
+  Colors.deepPurpleAccent,
+  Colors.lightBlueAccent,
+  Colors.lightGreenAccent,
+  Colors.redAccent,
+  Colors.greenAccent,
+  Colors.blueAccent,
+];
