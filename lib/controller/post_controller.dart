@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 class PostController extends GetxController {
   PostClass post = PostClass();
   List<PostClass> postList = [];
+  List<PostClass> selectedPostList = [];
   List visibleList = [].obs;
   bool isLoading = false;
   bool hasMore = true;
@@ -18,6 +19,17 @@ class PostController extends GetxController {
     super.onInit();
     scrollController.addListener(_scrollListener);
     fetchPost();
+  }
+
+
+  void selectItem(PostClass item, bool isSelected) {
+    item.isSelected = isSelected;
+    if (isSelected) {
+      selectedPostList.add(item);
+    } else {
+      selectedPostList.remove(item);
+    }
+    update();
   }
 
   void searchPost(String value) {

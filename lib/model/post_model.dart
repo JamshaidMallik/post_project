@@ -3,8 +3,9 @@ class PostClass {
   int? id;
   String? title;
   String? body;
+  bool? isSelected = false;
 
-  PostClass({this.userId, this.id, this.title, this.body});
+  PostClass({this.userId, this.id, this.title, this.body,  this.isSelected});
 
   PostClass.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:post_project/controller/post_controller.dart';
 import 'package:post_project/screens/todo-app/todo_main_screen.dart';
 import 'constant/constant.dart';
-import 'controller/post_controller.dart';
 import 'controller/theme_controller.dart';
 import 'controller/todo_controller.dart';
 
@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeController = Get.put(ThemeController());
+
     Get.put(TodoController());
     Get.put(PostController());
 
@@ -29,8 +30,7 @@ class MyApp extends StatelessWidget {
       darkTheme: MyThemes.darkTheme,
       themeMode: themeController.isDark ? ThemeMode.dark : ThemeMode.light,
       home: const TodoMainScreen(),
+      // home: const GoogleMapScreen(),
     );
   }
-
-  // custom theme class for different colors and fonts
 }

@@ -41,6 +41,8 @@ dependencies:
   get_storage:
   awesome_dialog: ^3.0.2
   intl: ^0.18.0
+  geolocator: ^9.0.2
+  google_maps_flutter: ^2.3.0
 
 
 

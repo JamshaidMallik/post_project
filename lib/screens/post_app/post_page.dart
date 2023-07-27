@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:post_project/screens/show_selectd_post_screen.dart';
 import '../../constant/constant.dart';
 import '../../controller/post_controller.dart';
 import '../../controller/theme_controller.dart';
@@ -28,6 +29,24 @@ class _PostPageState extends State<PostPage> {
                 'Posts',
                 style: bigFontStyle(),
               ),
+              actions: [
+                postController.selectedPostList.isNotEmpty?  InkWell(
+                    onTap: () => Get.to(const SelectedPostsScreen()),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CircleAvatar(
+                        backgroundColor: randomColor[Random().nextInt(randomColor.length)],
+                        child: Text(
+                          postController.selectedPostList.length.toString(),
+                          style: TextStyle(
+                              color: whiteColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0),
+                        ),
+                      ),
+                    )
+                ):Container(),
+              ],
             ),
             body: RefreshIndicator(
               backgroundColor: whiteColor,
@@ -59,7 +78,7 @@ class _PostPageState extends State<PostPage> {
                             itemBuilder: (BuildContext context, int index) {
                               if (index < postController.visibleList.length) {
                                 var item = postController.visibleList[index];
-                                return postCardWidget(context, item);
+                                return PostCardWidget(item: item);
                               } else {
                                 return loadingWidget(postController);
                               }
